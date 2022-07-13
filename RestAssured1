@@ -1,0 +1,43 @@
+package org.testvagrant.ipl.rcb;
+
+import io.restassured.http.Method;
+import io.restassured.response.ResponseBody;
+import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
+import static io.restassured.RestAssured.*;
+import static io.restassured.parsing.Parser.JSON;
+import static org.hamcrest.Matchers.*;
+
+public class RestAssured1{
+    @Test
+    public void verifyWicketKeeper() {
+        RestAssured.baseURI ="https://gist.github.com/kumarpani" ;
+
+        RequestSpecification http= RestAssured.given();
+        Response response = http.get("/1e759f27ae302be92ad51ec09955e765#file-teamrcb-json");
+        ResponseBody body = response.getBody();
+        String responseBody = body.asString();
+        JsonPath js = response.jsonPath();
+        String role=js.getJsonObject("player.role");
+        Assert.assertEquals(role.equals("Wicket-keeper"),true);
+
+     }
+     public void verifyforeignplayer(){
+
+         RestAssured.baseURI = "https://gist.github.com/kumarpani/1e759f27ae302be92ad51ec09955e765#file-teamrcb-json";
+
+
+     }
+}
